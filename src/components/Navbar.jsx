@@ -1,41 +1,69 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 export default function Navbar() {
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-4">
-      <Link className="navbar-brand fw-bold" to="/">
-        Loan Approval System
-      </Link>
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-3">
+      <div className="container-fluid">
 
-      <button
-        className="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#loanNavbar"
-      >
-        <span className="navbar-toggler-icon"></span>
-      </button>
+        {/* Brand */}
+        <Link className="navbar-brand fw-bold" to="/">
+          Loan Approval System
+        </Link>
 
-      <div className="collapse navbar-collapse" id="loanNavbar">
-        <ul className="navbar-nav ms-auto gap-3">
-          <li className="nav-item">
-            <Link className="nav-link" to="/">
-              Dashboard
-            </Link>
-          </li>
+        {/* Toggler */}
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#loanNavbar"
+          aria-controls="loanNavbar"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
 
-          <li className="nav-item">
-            <Link className="nav-link" to="/predict">
-              Apply Loan
-            </Link>
-          </li>
+        {/* Menu */}
+        <div className="collapse navbar-collapse" id="loanNavbar">
+          <ul className="navbar-nav ms-auto text-center text-lg-start gap-lg-3 mt-3 mt-lg-0">
 
-          <li className="nav-item">
-            <Link className="nav-link" to="/applications">
-              Applications
-            </Link>
-          </li>
-        </ul>
+            <li className="nav-item">
+              <NavLink
+                to="/"
+                end
+                className={({ isActive }) =>
+                  `nav-link fw-semibold ${isActive ? "active text-warning" : ""}`
+                }
+              >
+                Dashboard
+              </NavLink>
+            </li>
+
+            <li className="nav-item">
+              <NavLink
+                to="/predict"
+                className={({ isActive }) =>
+                  `nav-link fw-semibold ${isActive ? "active text-warning" : ""}`
+                }
+              >
+                Apply Loan
+              </NavLink>
+            </li>
+
+            <li className="nav-item">
+              <NavLink
+                to="/applications"
+                className={({ isActive }) =>
+                  `nav-link fw-semibold ${isActive ? "active text-warning" : ""}`
+                }
+              >
+                Applications
+              </NavLink>
+            </li>
+
+          </ul>
+        </div>
+
       </div>
     </nav>
   );

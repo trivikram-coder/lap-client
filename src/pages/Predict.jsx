@@ -36,7 +36,7 @@ export default function Predict() {
     };
 
     try {
-      const res = await axios.post("http://localhost:3000/predict", payload);
+      const res = await axios.post("https://lap-server.onrender.com/predict", payload);
       setResult(res.data);
       const existing =
   JSON.parse(localStorage.getItem("loanApplications")) || [];

@@ -42,12 +42,13 @@ export default function Predict() {
   JSON.parse(localStorage.getItem("loanApplications")) || [];
 
 existing.push({
-  id: Date.now(),
+  id: crypto.randomUUID(),
   status: res.data.status,
   income: payload.ApplicantIncome,
   loanAmount: payload.LoanAmount,
   createdAt: new Date().toISOString(),
 });
+
 
 localStorage.setItem(
   "loanApplications",

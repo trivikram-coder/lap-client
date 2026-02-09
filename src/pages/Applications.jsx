@@ -82,7 +82,7 @@ export default function Applications() {
             <Table striped hover responsive className="align-middle">
               <thead className="table-light">
                 <tr>
-                  <th>#</th>
+                  <th>Id</th>
                   <th>Date</th>
                   <th>Income</th>
                   <th>Loan Amount</th>
@@ -93,7 +93,7 @@ export default function Applications() {
               <tbody>
                 {applications.map((app, index) => (
                   <tr key={app.id || index}>
-                    <td>{index + 1}</td>
+                    <td>{app.id}</td>
                     <td>{new Date(app.createdAt).toLocaleDateString()}</td>
                     <td>₹ {app.income}</td>
                     <td>₹ {app.loanAmount}</td>

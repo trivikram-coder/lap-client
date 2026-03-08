@@ -83,9 +83,9 @@ export default function PredictPage() {
       {/* HERO */}
       <div className="bg-primary text-white py-5 shadow-sm">
         <Container>
-          <h2 className="fw-bold">AI Loan Eligibility Predictor</h2>
+          <h2 className="fw-bold">Smart Loan Eligibility Predictor</h2>
           <p className="opacity-75 mb-0">
-            Instantly check your loan approval chances using AI
+            Instantly check your loan approval chances
           </p>
 
           <Button

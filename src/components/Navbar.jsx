@@ -18,7 +18,7 @@ export default function Navbar() {
 
         {/* LOGO */}
         <Link className="navbar-brand fw-bold text-primary fs-4" to="/home">
-          LoanAI
+          Smart Loan Eligibility Predictor
         </Link>
 
         {/* MOBILE MENU */}

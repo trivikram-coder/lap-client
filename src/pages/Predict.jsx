@@ -1,6 +1,6 @@
+
 import { useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";   // ✅ ADDED
+import { useNavigate } from "react-router-dom";
 import {
   Container,
   Row,
@@ -16,12 +16,15 @@ import { toast } from "react-toastify";
 
 export default function PredictPage() {
 
-  const navigate = useNavigate();   // ✅ ADDED
+  const navigate = useNavigate();
 
-  const user=JSON.parse(localStorage.getItem("user")||"[]")
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [cibilLabel, setCibilLabel] = useState(null);
+
+  const requiredStar = <span className="text-danger">*</span>;
 
   const handleCibilChange = (e) => {
     const score = Number(e.target.value);
@@ -47,7 +50,7 @@ export default function PredictPage() {
     const f = e.target;
 
     const payload = {
-      userId:user.id,
+      userId: user.id,
       gender: f.gender.value,
       married: f.married.value,
       dependents: f.dependents.value,
@@ -85,11 +88,10 @@ export default function PredictPage() {
             Instantly check your loan approval chances using AI
           </p>
 
-          {/* ✅ ADDED HISTORY BUTTON */}
           <Button
             variant="light"
             className="mt-3"
-            onClick={()=>navigate("/history")}
+            onClick={() => navigate("/history")}
           >
             View Application History
           </Button>
@@ -101,22 +103,29 @@ export default function PredictPage() {
 
         <Row className="g-4">
 
-          {/* FORM SECTION */}
+          {/* FORM */}
           <Col lg={7}>
 
             <Card className="border-0 shadow-lg rounded-4">
               <Card.Body className="p-4 p-lg-5">
 
-                <h5 className="fw-bold mb-4">
+                <h5 className="fw-bold mb-2">
                   Applicant Information
                 </h5>
+
+                <p className="text-muted small mb-4">
+                  Fields marked with <span className="text-danger">*</span> are required.
+                </p>
 
                 <Form onSubmit={handleSubmit}>
 
                   <Row className="g-3">
 
                     <Col md={6}>
-                      <Form.Label>Gender</Form.Label>
+                      <Form.Label>
+                        Gender {requiredStar}
+                      </Form.Label>
+
                       <Form.Select name="gender" required>
                         <option value="">Select</option>
                         <option>Male</option>
@@ -125,17 +134,23 @@ export default function PredictPage() {
                     </Col>
 
                     <Col md={6}>
-                      <Form.Label>Marital Status</Form.Label>
-                      <Form.Select name="married">
+                      <Form.Label>
+                        Marital Status {requiredStar}
+                      </Form.Label>
+
+                      <Form.Select name="married" required>
                         <option value="">Select</option>
-                        <option>Yes</option>
-                        <option>No</option>
+                        <option value="married">Married</option>
+                        <option value="single">Single</option>
                       </Form.Select>
                     </Col>
 
                     <Col md={6}>
-                      <Form.Label>Dependents</Form.Label>
-                      <Form.Select name="dependents">
+                      <Form.Label>
+                        Dependents {requiredStar}
+                      </Form.Label>
+
+                      <Form.Select name="dependents" required>
                         <option value="">Select</option>
                         <option>0</option>
                         <option>1</option>
@@ -145,8 +160,11 @@ export default function PredictPage() {
                     </Col>
 
                     <Col md={6}>
-                      <Form.Label>Education</Form.Label>
-                      <Form.Select name="education">
+                      <Form.Label>
+                        Education {requiredStar}
+                      </Form.Label>
+
+                      <Form.Select name="education" required>
                         <option value="">Select</option>
                         <option>Graduate</option>
                         <option>Not Graduate</option>
@@ -154,8 +172,11 @@ export default function PredictPage() {
                     </Col>
 
                     <Col md={6}>
-                      <Form.Label>Self Employed</Form.Label>
-                      <Form.Select name="employed">
+                      <Form.Label>
+                        Self Employed {requiredStar}
+                      </Form.Label>
+
+                      <Form.Select name="employed" required>
                         <option value="">Select</option>
                         <option>Yes</option>
                         <option>No</option>
@@ -163,7 +184,10 @@ export default function PredictPage() {
                     </Col>
 
                     <Col md={6}>
-                      <Form.Label>CIBIL Score</Form.Label>
+                      <Form.Label>
+                        CIBIL Score {requiredStar}
+                      </Form.Label>
+
                       <Form.Control
                         type="number"
                         name="cibilScore"
@@ -181,7 +205,10 @@ export default function PredictPage() {
                     </Col>
 
                     <Col md={6}>
-                      <Form.Label>Applicant Income</Form.Label>
+                      <Form.Label>
+                        Applicant Income {requiredStar}
+                      </Form.Label>
+
                       <Form.Control
                         type="number"
                         name="applicantIncome"
@@ -190,7 +217,10 @@ export default function PredictPage() {
                     </Col>
 
                     <Col md={6}>
-                      <Form.Label>Co-applicant Income</Form.Label>
+                      <Form.Label>
+                        Co-applicant Income
+                      </Form.Label>
+
                       <Form.Control
                         type="number"
                         name="coIncome"
@@ -198,24 +228,35 @@ export default function PredictPage() {
                     </Col>
 
                     <Col md={6}>
-                      <Form.Label>Loan Amount</Form.Label>
+                      <Form.Label>
+                        Loan Amount {requiredStar}
+                      </Form.Label>
+
                       <Form.Control
                         type="number"
                         name="loanAmount"
+                        required
                       />
                     </Col>
 
                     <Col md={6}>
-                      <Form.Label>Loan Term</Form.Label>
+                      <Form.Label>
+                        Loan Term (months) {requiredStar}
+                      </Form.Label>
+
                       <Form.Control
                         type="number"
                         name="loanTerm"
+                        required
                       />
                     </Col>
 
                     <Col md={12}>
-                      <Form.Label>Property Area</Form.Label>
-                      <Form.Select name="area">
+                      <Form.Label>
+                        Property Area {requiredStar}
+                      </Form.Label>
+
+                      <Form.Select name="area" required>
                         <option value="">Select</option>
                         <option>Urban</option>
                         <option>Semiurban</option>
@@ -247,7 +288,7 @@ export default function PredictPage() {
 
           </Col>
 
-          {/* RESULT PANEL */}
+          {/* RESULT */}
           <Col lg={5}>
 
             <Card className="border-0 shadow-lg rounded-4 h-100">
@@ -278,6 +319,7 @@ export default function PredictPage() {
                         ))}
                       </ul>
                     )}
+
                   </Alert>
                 )}
 

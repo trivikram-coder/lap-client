@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchApplications, deleteApplication } from "../api/api";
+import { toast } from "react-toastify";
 
 export default function HistoryPage() {
 
@@ -65,7 +66,7 @@ export default function HistoryPage() {
 
       console.error("Delete failed", err);
 
-      alert("Failed to delete application");
+      toast.error("Failed to delete application");
 
     }
 

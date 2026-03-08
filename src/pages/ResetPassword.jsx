@@ -3,6 +3,7 @@ import axios from "axios";
 import { Container, Card, Form, Button } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 import { resetPassword } from "../api/api";
+import { toast } from "react-toastify";
 
 export default function ResetPassword(){
 
@@ -24,12 +25,12 @@ export default function ResetPassword(){
         newPassword: password
       });
 
-      alert("Password Reset Successful");
+      toast.success("Password Reset Successful");
 
       navigate("/login");
 
     }catch(err){
-      alert(err.response?.data?.message || "Error resetting password");
+      toast.error(err.response?.data?.message || "Error resetting password");
     }
 
   };

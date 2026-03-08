@@ -3,6 +3,7 @@ import axios from "axios";
 import { Container, Card, Form, Button } from "react-bootstrap";
 import { useNavigate, Link } from "react-router-dom";
 import { loginUser, registerUser } from "../api/api";
+import { toast } from "react-toastify";
 
 export default function Auth() {
 
@@ -46,8 +47,8 @@ export default function Auth() {
         );
 
         localStorage.setItem("user", JSON.stringify(res.data.user));
-
-        navigate("/");
+        toast.success("Login Successful")
+        navigate("/home");
 
       } else {
 
@@ -55,13 +56,13 @@ export default function Auth() {
           form
         );
 
-        alert("Registered Successfully");
+        toast.success("Registered Successfully");
         setIsLogin(true);
 
       }
 
     } catch (err) {
-      alert(err.response?.data?.message || "Something went wrong");
+      toast.error(err.response?.data?.message || "Something went wrong");
     }
   };
 

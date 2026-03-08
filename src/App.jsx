@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Layout from "./components/Layout";
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -24,7 +25,9 @@ function App() {
   return (
 
     <BrowserRouter>
-
+    <ToastContainer  position="top-right"
+        autoClose={3000}
+        theme="colored"/>
       <Routes>
 
         {/* AUTH */}

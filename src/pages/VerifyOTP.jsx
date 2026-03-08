@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { Container, Card, Form, Button } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function VerifyOTP() {
 
@@ -25,7 +26,7 @@ export default function VerifyOTP() {
       navigate("/reset-password", { state: { email } });
 
     } catch (err) {
-      alert("Invalid OTP");
+      toast.error("Invalid OTP");
     }
 
   };

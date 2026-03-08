@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { Container, Card, Row, Col, Button, Form } from "react-bootstrap";
-import { getUserProfile } from "../api/api";
+import { getUserProfile, updateUserProfile } from "../api/api";
+import { toast } from "react-toastify";
 
 export default function Profile() {
 
@@ -19,7 +19,6 @@ export default function Profile() {
 
   const [loading, setLoading] = useState(false);
 
-
   /* FETCH PROFILE */
 
   useEffect(() => {
@@ -28,8 +27,7 @@ export default function Profile() {
 
       try {
 
-        const res = await getUserProfile(storedUser.id)
-        
+        const res = await getUserProfile(storedUser.id);
 
         const user = {
           id: res.data.user._id,
@@ -46,7 +44,7 @@ export default function Profile() {
 
       } catch (err) {
 
-        alert("Failed to load profile");
+        toast.error("Failed to load profile");
 
       }
 
@@ -56,7 +54,7 @@ export default function Profile() {
       fetchProfile();
     }
 
-  }, [storedUser.id]);
+  }, []);
 
 
   /* INPUT CHANGE */
@@ -81,8 +79,8 @@ export default function Profile() {
 
       setLoading(true);
 
-      const res = await updatedUser(
-       storedUser.id,
+      const res = await updateUserProfile(
+        storedUser.id,
         formData
       );
 
@@ -91,11 +89,7 @@ export default function Profile() {
         ...res.data.updatedUser
       };
 
-      /* update localStorage */
-
       localStorage.setItem("user", JSON.stringify(updatedUser));
-
-      /* update state */
 
       setStoredUser(updatedUser);
 
@@ -107,11 +101,11 @@ export default function Profile() {
 
       setEditing(false);
 
-      alert("Profile updated successfully");
+      toast.success("Profile updated successfully");
 
     } catch (err) {
 
-      alert("Update failed");
+      toast.error("Update failed");
 
     } finally {
 
@@ -130,96 +124,120 @@ export default function Profile() {
 
         <Row className="justify-content-center">
 
-          <Col lg={6}>
+          <Col lg={7} md={9}>
 
-            <Card className="border-0 shadow-lg rounded-4">
+            <Card className="border-0 shadow rounded-4">
 
               <Card.Body className="p-5">
 
                 {/* PROFILE HEADER */}
 
-                <div className="text-center mb-4">
+                <div className="text-center mb-5">
 
                   <div
                     className="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center mx-auto mb-3"
                     style={{
-                      width: "70px",
-                      height: "70px",
-                      fontSize: "24px",
+                      width: "80px",
+                      height: "80px",
+                      fontSize: "28px",
                       fontWeight: "bold"
                     }}
                   >
                     {formData.userName?.charAt(0)?.toUpperCase()}
                   </div>
 
-                  <h4 className="fw-bold mb-0">
-                    {formData.userName}
-                  </h4>
+                  <h3 className="fw-bold mb-1">
+                    {formData.userName || "User"}
+                  </h3>
 
                   <p className="text-muted small">
-                    Manage your account details
+                    Manage your account information
                   </p>
 
                 </div>
 
 
+                {/* PROFILE FORM */}
+
                 <Form onSubmit={saveProfile}>
 
-                  {/* USERNAME */}
+                  <Row>
 
-                  <Form.Group className="mb-3">
+                    <Col md={12}>
 
-                    <Form.Label>Username</Form.Label>
+                      <Form.Group className="mb-4">
 
-                    <Form.Control
-                      type="text"
-                      name="userName"
-                      value={formData.userName}
-                      disabled={!editing}
-                      onChange={handleChange}
-                    />
+                        <Form.Label className="fw-semibold">
+                          Username
+                        </Form.Label>
 
-                  </Form.Group>
+                        <Form.Control
+                          type="text"
+                          name="userName"
+                          value={formData.userName}
+                          disabled={!editing}
+                          onChange={handleChange}
+                          className="py-2"
+                        />
 
+                      </Form.Group>
 
-                  {/* EMAIL */}
-
-                  <Form.Group className="mb-3">
-
-                    <Form.Label>Email</Form.Label>
-
-                    <Form.Control
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      disabled={!editing}
-                      onChange={handleChange}
-                    />
-
-                  </Form.Group>
+                    </Col>
 
 
-                  {/* MOBILE */}
+                    <Col md={12}>
 
-                  <Form.Group className="mb-4">
+                      <Form.Group className="mb-4">
 
-                    <Form.Label>Mobile Number</Form.Label>
+                        <Form.Label className="fw-semibold">
+                          Email Address
+                        </Form.Label>
 
-                    <Form.Control
-                      type="text"
-                      name="mobileNumber"
-                      value={formData.mobileNumber}
-                      disabled={!editing}
-                      onChange={handleChange}
-                    />
+                        <Form.Control
+                          type="email"
+                          name="email"
+                          value={formData.email}
+                          disabled={!editing}
+                          onChange={handleChange}
+                          className="py-2"
+                        />
 
-                  </Form.Group>
+                      </Form.Group>
 
+                    </Col>
+
+
+                    <Col md={12}>
+
+                      <Form.Group className="mb-4">
+
+                        <Form.Label className="fw-semibold">
+                          Mobile Number
+                        </Form.Label>
+
+                        <Form.Control
+                          type="text"
+                          name="mobileNumber"
+                          value={formData.mobileNumber}
+                          disabled={!editing}
+                          onChange={handleChange}
+                          className="py-2"
+                        />
+
+                      </Form.Group>
+
+                    </Col>
+
+                  </Row>
+
+
+                  {/* BUTTONS */}
 
                   {!editing ? (
 
                     <Button
-                      className="w-100 fw-semibold"
+                      variant="primary"
+                      className="w-100 py-2 fw-semibold"
                       type="button"
                       onClick={() => setEditing(true)}
                     >
@@ -228,21 +246,21 @@ export default function Profile() {
 
                   ) : (
 
-                    <div className="d-flex gap-2">
+                    <div className="d-flex gap-3">
 
                       <Button
                         type="submit"
                         variant="success"
-                        className="w-100"
+                        className="w-100 py-2"
                         disabled={loading}
                       >
-                        {loading ? "Saving..." : "Save"}
+                        {loading ? "Saving..." : "Save Changes"}
                       </Button>
 
                       <Button
                         type="button"
                         variant="outline-secondary"
-                        className="w-100"
+                        className="w-100 py-2"
                         onClick={() => setEditing(false)}
                       >
                         Cancel

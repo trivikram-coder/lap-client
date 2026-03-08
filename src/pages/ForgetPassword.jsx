@@ -3,6 +3,7 @@ import axios from "axios";
 import { Container, Card, Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { checkEmail } from "../api/api";
+import { toast } from "react-toastify";
 
 export default function ForgetPassword() {
 
@@ -16,7 +17,7 @@ export default function ForgetPassword() {
     e.preventDefault();
 
     if (!email) {
-      alert("Please enter email");
+      toast.info("Please enter email");
       return;
     }
 
@@ -35,7 +36,7 @@ export default function ForgetPassword() {
 
     } catch (err) {
 
-      alert(err.response?.data?.message || "Email not found");
+      toast.error(err.response?.data?.message || "Email not found");
 
     } finally {
       setLoading(false);

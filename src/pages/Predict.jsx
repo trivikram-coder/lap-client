@@ -12,6 +12,7 @@ import {
   Card
 } from "react-bootstrap";
 import { predictLoan } from "../api/api";
+import { toast } from "react-toastify";
 
 export default function PredictPage() {
 
@@ -66,7 +67,7 @@ export default function PredictPage() {
       setResult(res.data);
 
     } catch {
-      alert("Prediction failed");
+      toast.error("Prediction failed");
     } finally {
       setLoading(false);
     }

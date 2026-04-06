@@ -139,7 +139,17 @@ export default function HistoryPage() {
                     <strong>ID :</strong> {app._id}
                   </p>
 
-
+                  <p>
+                    <strong>Date :</strong>
+                    {new Date(app.createdAt).toLocaleString('en-IN', {
+                      day: 'numeric',
+                      month: 'short',
+                      year: 'numeric',
+                      hour: 'numeric',
+                      minute: '2-digit',
+                      hour12: true
+                    })}
+              </p>
                   {/* STATUS */}
 
                   <h6 className="fw-bold mb-2">

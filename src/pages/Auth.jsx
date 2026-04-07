@@ -1,5 +1,4 @@
 import { useState } from "react";
-import axios from "axios";
 import { Container, Card, Form, Button } from "react-bootstrap";
 import { useNavigate, Link } from "react-router-dom";
 import { loginUser, registerUser } from "../api/api";
@@ -67,102 +66,97 @@ export default function Auth() {
   };
 
   return (
+    <div className="min-vh-100 d-flex align-items-center bg-light py-5">
+      <Container className="d-flex justify-content-center align-items-center">
+        <Card className="w-100 border-0 shadow-lg rounded-4" style={{ maxWidth: "440px" }}>
+          <Card.Body className="p-4 p-md-5">
+            <div className="text-center mb-4">
+              <div className="badge rounded-pill text-bg-primary px-3 py-2 mb-3">
+                Smart Loan Eligibilty Prediction App
+              </div>
 
-    <Container className="d-flex justify-content-center align-items-center vh-100">
+              <h3 className="fw-bold mb-1">{isLogin ? "Login" : "Register"}</h3>
+              <p className="text-muted mb-0">
+                {isLogin ? "Sign in to continue" : "Create a new account"}
+              </p>
+            </div>
 
-      <Card
-        className="p-4 shadow-lg"
-        style={{ width: "400px", borderRadius: "12px" }}
-      >
+            <Form onSubmit={handleSubmit} className="d-grid gap-3">
+              {!isLogin && (
+                <>
+                  <Form.Control
+                    className="py-2"
+                    placeholder="Username"
+                    name="userName"
+                    value={form.userName}
+                    onChange={handleChange}
+                    required
+                  />
 
-        <h3 className="text-center mb-3">
-          {isLogin ? "Login" : "Register"}
-        </h3>
+                  <Form.Control
+                    className="py-2"
+                    placeholder="Mobile Number"
+                    name="mobileNumber"
+                    value={form.mobileNumber}
+                    onChange={handleChange}
+                    required
+                  />
+                </>
+              )}
 
-        <Form onSubmit={handleSubmit}>
-
-          {!isLogin && (
-            <>
               <Form.Control
-                className="mb-3"
-                placeholder="Username"
-                name="userName"
-                value={form.userName}
+                className="py-2"
+                type="email"
+                placeholder="Email"
+                name="email"
+                value={form.email}
                 onChange={handleChange}
                 required
               />
 
               <Form.Control
-                className="mb-3"
-                placeholder="Mobile Number"
-                name="mobileNumber"
-                value={form.mobileNumber}
+                className="py-2"
+                type="password"
+                placeholder="Password"
+                name="password"
+                value={form.password}
                 onChange={handleChange}
                 required
               />
-            </>
-          )}
 
-          <Form.Control
-            className="mb-3"
-            type="email"
-            placeholder="Email"
-            name="email"
-            value={form.email}
-            onChange={handleChange}
-            required
-          />
+              <Button className="w-100 py-2 fw-semibold shadow-sm" type="submit" variant="primary">
+                {isLogin ? "Login" : "Register"}
+              </Button>
+            </Form>
 
-          <Form.Control
-            className="mb-3"
-            type="password"
-            placeholder="Password"
-            name="password"
-            value={form.password}
-            onChange={handleChange}
-            required
-          />
+            {isLogin && (
+              <div className="text-center mt-3">
+                <Link to="/forgot-password" className="text-decoration-none fw-medium">
+                  Forgot Password?
+                </Link>
+              </div>
+            )}
 
-          <Button className="w-100 mb-2" type="submit">
-            {isLogin ? "Login" : "Register"}
-          </Button>
-
-        </Form>
-
-        {isLogin && (
-          <div className="text-center mt-2">
-            <Link to="/forgot-password">Forgot Password?</Link>
-          </div>
-        )}
-
-        <div className="text-center mt-3">
-
-          {isLogin ? (
-            <p>
-              Don't have an account?{" "}
-              <span
-                style={{ cursor: "pointer", color: "blue" }}
-                onClick={toggleMode}
-              >
-                Register
-              </span>
-            </p>
-          ) : (
-            <p>
-              Already have an account?{" "}
-              <span
-                style={{ cursor: "pointer", color: "blue" }}
-                onClick={toggleMode}
-              >
-                Login
-              </span>
-            </p>
-          )}
-
-        </div>
-
-      </Card>
-
-    </Container>
+            <div className="text-center mt-4 pt-3 border-top">
+              {isLogin ? (
+                <p className="mb-0 text-muted">
+                  Don't have an account?{" "}
+                  <span className="text-primary fw-semibold" style={{ cursor: "pointer" }} onClick={toggleMode}>
+                    Register
+                  </span>
+                </p>
+              ) : (
+                <p className="mb-0 text-muted">
+                  Already have an account?{" "}
+                  <span className="text-primary fw-semibold" style={{ cursor: "pointer" }} onClick={toggleMode}>
+                    Login
+                  </span>
+                </p>
+              )}
+            </div>
+          </Card.Body>
+        </Card>
+      </Container>
+    </div>
   );
 }
